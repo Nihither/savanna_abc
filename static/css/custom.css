@@ -1,0 +1,16 @@
+body {
+  padding-bottom: 0px;
+}
+
+#teacher_list_body, #student_list_body {
+  height: 460px;
+  overflow-y: auto;
+}
+
+#alert_block {
+  position: fixed;
+  bottom: 5px;
+  right: 20px;
+  width: 350px;
+  margin-bottom: 0px;
+}
