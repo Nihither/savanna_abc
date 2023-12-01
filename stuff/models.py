@@ -33,7 +33,7 @@ class Role(models.Model):
         return self.code
 
 
-class Contacts(models.Model):
+class Contact(models.Model):
     profile = models.ForeignKey(to=Profile, on_delete=models.CASCADE, related_name='contacts', verbose_name="Профиль")
     phone = models.CharField(verbose_name="Телефон", max_length=15, blank=True, null=True)
     email = models.EmailField(verbose_name="email", max_length=30, blank=True, null=True)
