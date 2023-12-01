@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Profile, Role, Contacts, Teacher, Student
+from .models import Profile, Role, Contact, Teacher, Student
 
 
 # Register your models here.
@@ -11,6 +11,6 @@ class ProfileAdmin(admin.ModelAdmin):
 
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Role)
-admin.site.register(Contacts)
+admin.site.register(Contact)
 admin.site.register(Teacher)
 admin.site.register(Student)
