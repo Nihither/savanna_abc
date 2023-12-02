@@ -2,9 +2,10 @@ from django.db import models
 import uuid
 
 from django.contrib.auth.models import User
+from messenger.models import Chat
 
 
-# Create your models here.
+# Create your models here...
 class Profile(models.Model):
     user = models.OneToOneField(to=User, on_delete=models.SET_NULL, null=True, blank=True, related_name='profiles',
                                 verbose_name="Аккаунт")
@@ -45,13 +46,21 @@ class Contact(models.Model):
 
 
 class Teacher(models.Model):
-    profile = models.OneToOneField(to=Profile, on_delete=models.CASCADE, related_name='teachers',
+    profile = models.OneToOneField(to=Profile, on_delete=models.CASCADE, related_name='teacher',
                                    verbose_name="Профиль")
     manager = models.ForeignKey(to=Profile, on_delete=models.SET_NULL, blank=True, null=True,
                                 related_name='managing_teachers', verbose_name="Менеджер")
 
     def __str__(self):
-        return self.profile
+        return self.profile.full_name()
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            super(Teacher, self).save(*args, **kwargs)
+            new_chat = Chat()
+            new_chat.first_person = self.profile
+            new_chat.second_person = self.manager
+            new_chat.save()
 
 
 class Student(models.Model):
