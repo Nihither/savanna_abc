@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os.path
 from pathlib import Path
 
+import messenger.apps
 import news.apps
 import stuff.apps
 from . import local_settings
@@ -37,6 +38,7 @@ ALLOWED_HOSTS = local_settings.ALLOWED_HOSTS[ENV]
 # Application definition
 
 INSTALLED_APPS = [
+    'messenger.apps.MessengerConfig',
     'stuff.apps.StuffConfig',
     'news.apps.NewsConfig',
     'django.contrib.admin',
