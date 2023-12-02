@@ -19,11 +19,11 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, unique=True, verbose_name='UUID')),
-                ('person1', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.CASCADE, related_name='chats_person1', to='stuff.profile', verbose_name='Профиль 1')),
-                ('person2', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.CASCADE, related_name='chats_person2', to='stuff.profile', verbose_name='Профиль 2')),
+                ('first_person', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.CASCADE, related_name='chats_first_person', to='stuff.profile', verbose_name='Профиль 1')),
+                ('second_person', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.CASCADE, related_name='chats_second_person', to='stuff.profile', verbose_name='Профиль 2')),
             ],
             options={
-                'unique_together': {('person1', 'person2')},
+                'unique_together': {('first_person', 'second_person')},
             },
         ),
     ]
