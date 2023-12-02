@@ -47,6 +47,8 @@ class Contact(models.Model):
 class Teacher(models.Model):
     profile = models.OneToOneField(to=Profile, on_delete=models.CASCADE, related_name='teachers',
                                    verbose_name="Профиль")
+    manager = models.ForeignKey(to=Profile, on_delete=models.SET_NULL, blank=True, null=True,
+                                related_name='managing_teachers', verbose_name="Менеджер")
 
     def __str__(self):
         return self.profile
@@ -57,6 +59,8 @@ class Student(models.Model):
     is_adult = models.BooleanField(verbose_name="Взрослый", default=True)
     trustee = models.OneToOneField(to=Profile, on_delete=models.SET_NULL, related_name='child',  blank=True, null=True,
                                    verbose_name="Контактное лицо")
+    manager = models.ForeignKey(to=Profile, on_delete=models.SET_NULL, blank=True, null=True,
+                                related_name='managing_students', verbose_name="Менеджер")
 
     def __str__(self):
         return self.profile
