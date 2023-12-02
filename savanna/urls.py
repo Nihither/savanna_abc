@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 
 from news import urls as news_urls
 from stuff import urls as stuff_urls
+from messenger import urls as messenger_urls
 
 
 urlpatterns = [
@@ -27,7 +28,8 @@ urlpatterns = [
     path('api/news/', include(news_urls.api_url_patterns)),
     path('news/', include(news_urls.views_url_patterns)),
     path('api/stuff/', include(stuff_urls.api_url_patterns)),
-    path('stuff/', include(stuff_urls.views_url_patterns))
+    path('stuff/', include(stuff_urls.views_url_patterns)),
+    path('api/chats/', include(messenger_urls.api_url_patterns))
 ]
 
 if settings.DEBUG:
