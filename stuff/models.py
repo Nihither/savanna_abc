@@ -42,7 +42,7 @@ class Contact(models.Model):
     additional_contact_description = models.CharField(verbose_name="Описание", max_length=100, blank=True, null=True)
 
     def __str__(self):
-        return f"Контакт {self.profile}"
+        return f"Контакт {self.profile.full_name()}"
 
 
 class Teacher(models.Model):
@@ -57,10 +57,13 @@ class Teacher(models.Model):
     def save(self, *args, **kwargs):
         if not self.pk:
             super(Teacher, self).save(*args, **kwargs)
+            # Add new chat teacher-manager
             new_chat = Chat()
             new_chat.first_person = self.profile
             new_chat.second_person = self.manager
             new_chat.save()
+        else:
+            super(Teacher, self).save(*args, **kwargs)
 
 
 class Student(models.Model):
@@ -72,4 +75,15 @@ class Student(models.Model):
                                 related_name='managing_students', verbose_name="Менеджер")
 
     def __str__(self):
-        return self.profile
+        return self.profile.full_name()
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            super(Student, self).save(*args, **kwargs)
+            # Add new chat student-manager
+            new_chat = Chat()
+            new_chat.first_person = self.profile
+            new_chat.second_person = self.manager
+            new_chat.save()
+        else:
+            super(Student, self).save(*args, **kwargs)
