@@ -25,6 +25,7 @@ from messenger import urls as messenger_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include(stuff_urls.accounts_url_patterns)),
     path('api/news/', include(news_urls.api_url_patterns)),
     path('news/', include(news_urls.views_url_patterns)),
     path('api/stuff/', include(stuff_urls.api_url_patterns)),
