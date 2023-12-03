@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content-block %}
+
+<div class="container">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <!-- Birthday this week -->
+            <div>
+                <h3>Дни рождения на этой неделе</h3>
+                {% if students_coming_birthdays_this_week or teachers_coming_birthdays_this_week %}
+                    {% if students_coming_birthdays_this_week %}
+                        <h4>Дни рождения студентов</h4>
+                        {% for student in students_coming_birthdays_this_week %}
+                            <strong>{% if student.first_name %}{{ student.first_name }}{% else %}{% endif %} {% if student.last_name %}{{ student.last_name }}{% else %}{% endif %} {{ student.birthday }}</strong>
+                            <p>{% if student.parent_first_name %}{{ student.parent_first_name }}{% else %}{% endif %} {% if student.parent_last_name %}{{ student.parent_last_name }}{% else %}{% endif %}
+                            {% if student.contact %}{{ student.contact }}{% else %}{{ student.parent_contact }}{% endif %}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {% if teachers_coming_birthdays_this_week %}
+                        <h4>Дни рождения сотрудников</h4>
+                        {% for teacher in teachers_coming_birthdays_this_week %}
+                            <strong>{% if teacher.first_name %}{{ teacher.first_name }}{% else %}{% endif %} {% if teacher.last_name %}{{ teacher.last_name }}{% else %}{% endif %} {{ teacher.birthday }}</strong>
+                            <p>{% if teacher.contact %}{{ teacher.contact }}{% else %}{% endif %}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% else %}
+                    <p>На этой неделе никто не празднует&#128533;</p>
+                {% endif %}
+            </div>
+
+            <!-- Birthday next week -->
+            <div>
+                {% if students_coming_birthdays_next_week or teachers_coming_birthdays_next_week %}
+                    <h3>Дни рождения на следующей неделе</h3>
+                    {% if students_coming_birthdays_next_week %}
+                        <h4>Дни рождения студентов</h4>
+                        {% for student in students_coming_birthdays_next_week %}
+                            <strong>{% if student.first_name %}{{ student.first_name }}{% else %}{% endif %} {% if student.last_name %}{{ student.last_name }}{% else %}{% endif %} {{ student.birthday }}</strong>
+                            <p>{% if student.parent_first_name %}{{ student.parent_first_name }}{% else %}{% endif %} {% if student.parent_last_name %}{{ student.parent_last_name }}{% else %}{% endif %}
+                            {% if student.contact %}{{ student.contact }}{% else %}{{ student.parent_contact }}{% endif %}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {% if teachers_coming_birthdays_next_week %}
+                        <h4>Дни рождения сотрудников</h4>
+                        {% for teacher in teachers_coming_birthdays_next_week %}
+                            <strong>{% if teacher.first_name %}{{ teacher.first_name }}{% else %}{% endif %} {% if teacher.last_name %}{{ teacher.last_name }}{% else %}{% endif %} {{ teacher.birthday }}</strong>
+                            <p>{% if teacher.contact %}{{ teacher.contact }}{% else %}{% endif %}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>  <!-- sidebar -->
+
+        <!-- Main section -->
+        <div class="col-md-9">
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="active"><a href="#teachers_list_panel" aria-controls="teachers_list" role="tab" data-toggle="tab">Преподаватели</a></li>
+                <li role="presentation"><a href="#students_list_panel" aria-controls="students_list" role="tab" data-toggle="tab">Студенты</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <!-- Teachers section -->
+                <div class="tab-pane in active fade" role="tabpanel" id="teachers_list_panel">
+                    <div class="navbar navbar-default">
+                        <div class="container-fluid">
+                            <form action="javascript:void(null)" class="navbar-form navbar-left" role="search" id="search_results_teacher_form">
+                                <div class="form-group">
+                                    <input type="text" name="req" class="form-control" placeholder="Search" id="search_results_teacher_input">
+                                </div>
+                            </form>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li data-toggle="tooltip" data-placement="bottom" title="Добавить преподавателя">
+                                    <a href="" id="add_teacher" data-toggle="modal"><span class="glyphicon glyphicon-plus"></span></a>
+                                </li>
+                                <li id="show_active_teacher_list" class="active"><a href="">Активные</a></li>
+                                <li id="show_archive_teacher_list"><a href="">В архиве</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="teacher_list_body">
+                        <!-- Teacher list -->
+                    </div>
+                </div>
+                <!-- Students section -->
+                <div class="tab-pane fade" role="tabpanel" id="students_list_panel">
+                    <div class="navbar navbar-default">
+                        <div class="container-fluid">
+                            <form action="javascript:void(null)" class="navbar-form navbar-left" role="search" id="search_results_student_form">
+                                <div class="form-group">
+                                    <input type="text" name="req" class="form-control" placeholder="Search" id="search_results_student_input">
+                                </div>
+                            </form>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li data-toggle="tooltip" data-placement="bottom" title="Добавить студента">
+                                    <a href="" id="add_student"><span class="glyphicon glyphicon-plus"></span></a>
+                                </li>
+                                <li id="show_active_student_list" class="active"><a href="">Активные</a></li>
+                                <li id="show_archive_student_list"><a href="">В архиве</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="student_list_body">
+                        <!-- Student list -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  <!-- row -->
+</div>  <!-- container -->
+
+<!-- Modal section -->
+
+<div class="modal fade" id="index_page_modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" area-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 id="index_page_modal_title"></h4>
+            </div>
+            <div class="modal-body" id="index_page_modal_body"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Alert block -->
+<div id="alert_block"></div>
+
+{% endblock %}

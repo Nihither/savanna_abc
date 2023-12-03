@@ -1,15 +1,15 @@
 from django.urls import path
+from .views import index
 from .account_views import user_login, user_logout, PasswordReset, PasswordResetDone, PasswordResetConfirm, \
     PasswordResetComplete, PasswordChange, PasswordChangeDone
 
-# API urls
-api_url_patterns = [
 
-]
+# API urls
+api_url_patterns = []
 
 # Views urls
 views_url_patterns = [
-
+    path('', index, name='index')
 ]
 
 # Account urls
