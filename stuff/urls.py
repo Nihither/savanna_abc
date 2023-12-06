@@ -2,6 +2,7 @@ from django.urls import path
 from .views import index
 from .account_views import user_login, user_logout, PasswordReset, PasswordResetDone, PasswordResetConfirm, \
     PasswordResetComplete, PasswordChange, PasswordChangeDone
+from .accounts_api import get_profile_uuid
 
 
 # API urls
@@ -10,6 +11,11 @@ api_url_patterns = []
 # Views urls
 views_url_patterns = [
     path('', index, name='index')
+]
+
+# Account API urls
+accounts_api_url_patterns = [
+    path('get_profile_uuid/', get_profile_uuid, name='get_profile_uuid')
 ]
 
 # Account urls
