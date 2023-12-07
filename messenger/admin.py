@@ -5,7 +5,7 @@ from .models import Chat
 
 # Register your models here.
 class ChatAdmin(admin.ModelAdmin):
-    list_display = ['uuid', 'first_person', 'second_person']
+    list_display = ['uuid', 'manager', 'teacher', 'student']
     ordering = ['uuid']
 
 
