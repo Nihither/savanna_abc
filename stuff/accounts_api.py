@@ -22,6 +22,6 @@ def get_profile_uuid(request):
                 }
                 return JsonResponse(status=200, data=data)
             else:
-                return HttpResponse("User has been disabled", status=403)
+                return HttpResponse(status=403, content="User has been disabled")
         else:
-            return HttpResponse("Invalid username or password", status=401)
+            return HttpResponse(status=401, content="Invalid username or password")
