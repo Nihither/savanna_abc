@@ -59,8 +59,8 @@ class Teacher(models.Model):
             super(Teacher, self).save(*args, **kwargs)
             # Add new chat teacher-manager
             new_chat = Chat()
-            new_chat.participants.add(self.profile, self.manager)
             new_chat.save()
+            new_chat.participants.add(self.profile, self.manager)
         else:
             super(Teacher, self).save(*args, **kwargs)
 
@@ -81,7 +81,7 @@ class Student(models.Model):
             super(Student, self).save(*args, **kwargs)
             # Add new chat student-manager
             new_chat = Chat()
-            new_chat.participants.add(self.profile, self.manager)
             new_chat.save()
+            new_chat.participants.add(self.profile, self.manager)
         else:
             super(Student, self).save(*args, **kwargs)
