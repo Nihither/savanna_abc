@@ -1,8 +1,6 @@
-import base64
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponse
-from django.core.serializers import serialize
 from stuff.models import Profile
 from .models import Chat
 
@@ -32,7 +30,7 @@ def get_chats_list(request):
                                 part_data = {
                                     "participant": profile.full_name()
                                 }
-                            chat_data.update(part_data)
+                                chat_data.update(part_data)
                     chats_data.append(chat_data)
                 json_data = {
                     "chats": chats_data
