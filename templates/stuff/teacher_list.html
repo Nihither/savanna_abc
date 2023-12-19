@@ -1,0 +1,20 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Контакт</th>
+            <th><span class="glyphicon glyphicon-zoom-in"></span></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for teacher in teachers %}
+        <tr>
+            <td>{% if teacher.first_name %}{{ teacher.first_name }}{% else %}{% endif %}</td>
+            <td>{% if teacher.last_name %}{{ teacher.last_name }}{% else %}{% endif %}</td>
+            <td>{% if teacher.contact.phone %}{{ teacher.contact.phone }}{% endif %}</td>
+            <td><a href="/teacher/{{ teacher.id }}"><span class="glyphicon glyphicon-arrow-right"></span></a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

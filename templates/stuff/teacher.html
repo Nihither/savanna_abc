@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content-block %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>{{ teacher.first_name }} {{ teacher.last_name }} 
+                {% if teacher.contact.phone %}<small><a href="tel:{{ teacher.contact.phone }}">{{ teacher.contact.phone }}</a></small>{% endif %}
+                {% if teacher.rmv %}<small>Запись в архиве</small>{% endif %}
+            </h2>
+        </div>
+    </div>
+
+    <div class="navbar navbar-default">
+        <div class="container-fluid">
+            <ul class="nav nav-tabs navbar-nav">
+                <li role="presentation" class="active"><a href="#teacher_schedule_panel" aria-controls="schedule_panel" role="tab" data-toggle="tab">Расписание</a></li>
+                <li role="presentation"><a href="#students_list_per_teacher_panel" aria-controls="students_list_panel" role="tab" data-toggle="tab">Студенты</a></li>
+            </ul>
+            <!-- teacher menu -->
+            <ul class="nav navbar-nav navbar-right">
+                <li data-toggle="tooltip" data-placement="bottom" title="Назначить студента">
+                    <a href="#" id="assign_student_to_teacher" data-toggle="modal"><span class="glyphicon glyphicon-plus"></span></a>
+                </li>
+                <li data-toggle="tooltip" data-placement="bottom" title="Удалить студента">
+                    <a href="#" id="reject_student_to_teacher" data-toggle="modal"><span class="glyphicon glyphicon-minus"></span></a>
+                </li>
+                <li class="dropdown" data-toggle="tooltip" data-placement="bottom" title="Изменить">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span class="glyphicon glyphicon-pencil"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" onclick="" id="set_available_timestamps">
+                            <span class="glyphicon glyphicon-calendar"></span> Изменить окна</a>
+                        </li>
+                        <li><a href="#">
+                            <span class="glyphicon glyphicon-th"></span> Изменить граффик ученика</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown" data-toggle="tooltip" data-placement="bottom" title="В архив">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-header">Поместить в архив?</li>
+                        <li class="divider" role="separator"></li>
+                        <li><a href="#" onclick="" id="archive_teacher">{% csrf_token %}
+                                {% if teacher.rmv %}
+                                    <span class="glyphicon glyphicon-eye-open"></span> Из архива
+                                {% else %}
+                                    <span class="glyphicon glyphicon-eye-close"></span> В архив
+                                {% endif %}</a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="" id="delete_teacher">{% csrf_token %}
+                                <span class="glyphicon glyphicon-trash"></span> Удалить</a>
+                        </li>
+                        <li><a href="#"><span class="glyphicon glyphicon-asterisk"></span> Отмена</a></li>
+                    </ul>
+                </li>
+            </ul> <!-- teacher menu-->
+        </div> <!-- container-fluid -->
+    </div> <!-- navbar -->
+</div> <!-- container -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tab-content">
+                <!-- schedule section -->
+                <div class="tab-pane in active fade" id="teacher_schedule_panel" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-5">
+                            {{ calendar }}
+                        </div>
+                
+                        <div class="col-md-7">
+                            <h3>Расписание на день <small>Выберите день</small></h3>
+                            <div id="classes_per_day"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- student section -->
+                <div class="tab-pane fade" id="students_list_per_teacher_panel" role="tabpanel">
+                    <!-- students list -->
+                </div>
+            </div>
+        </div>
+    </div> <!-- row -->
+</div> <!-- container -->
+
+<!-- Modal section -->
+
+<div class="modal fade" id="teacher_page_modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" area-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 id="teacher_page_modal_title"></h4>
+            </div>
+            <div class="modal-body" id="teacher_page_modal_body"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Alert block -->
+<div id="alert_block"></div>
+
+{% endblock %}

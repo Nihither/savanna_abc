@@ -1,0 +1,19 @@
+<table class="table">
+    <thead>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th><span class="glyphicon glyphicon-option-horizontal"></span></th>
+    </thead>
+    <tbody>
+        {% for class in classes %}
+            <tr>
+                <td>{{ class.student.profile.first_name }}</td>
+                <td>{{ class.student.profile.last_name }}</td>
+                <td>
+                    <a href="{% url 'student_details' student_id=class.student.profile.id %}">
+                        <span class="glyphicon glyphicon-arrow-right"></span></a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

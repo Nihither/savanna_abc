@@ -1,0 +1,24 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>first name</th>
+            <th>last name</th>
+            <th>contact</th>
+<!--            <th>parent_first_name</th>-->
+<!--            <th>parent_contact</th>-->
+            <th><span class="glyphicon glyphicon-zoom-in"></span></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in students %}
+        <tr>
+            <td>{% if student.first_name %}{{ student.first_name }}{% else %}{% endif %}</td>
+            <td>{% if student.last_name %}{{ student.last_name }}{% else %}{% endif %}</td>
+            <td>{% if student.contact.phone %}{{ student.contact.phone }}{% endif %}</td>
+<!--            <td>{% if student.parent_first_name %}{{ student.parent_first_name }}{% else %}{% endif %}</td>-->
+<!--            <td>{% if student.parent_contact %}{{ student.parent_contact }}{% else %}{% endif %}</td>-->
+            <td><a href="/student/{{ student.id }}"><span class="glyphicon glyphicon-arrow-right"></span></a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

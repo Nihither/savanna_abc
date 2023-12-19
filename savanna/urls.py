@@ -31,7 +31,8 @@ urlpatterns = [
     path('news/', include(news_urls.views_url_patterns)),
     path('api/stuff/', include(stuff_urls.api_url_patterns)),
     path('', include(stuff_urls.views_url_patterns)),
-    path('api/chats/', include(messenger_urls.api_url_patterns))
+    path('api/chats/', include(messenger_urls.api_url_patterns)),
+    path('scheduler/', include(stuff_urls.scheduler_url_patterns))
 ]
 
 if settings.DEBUG:
