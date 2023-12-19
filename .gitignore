@@ -1,5 +1,6 @@
 # Custom section
 savanna/local_settings.py
+/savanna/secrets.py
 
 # DB
 backup-dbs/
