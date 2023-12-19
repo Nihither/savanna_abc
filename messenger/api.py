@@ -1,8 +1,9 @@
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponse
+from django.core.serializers import serialize
 from stuff.models import Profile
-from .models import Chat
+from .models import Chat, Message
 
 
 @csrf_exempt
@@ -40,3 +41,24 @@ def get_chats_list(request):
                 return HttpResponse(status=403, content="Forbidden")
         else:
             return HttpResponse(status=401, content="Invalid name or password")
+
+
+@csrf_exempt
+def get_messages_list(request):
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    chat_uuid = request.POST.get('chat_uuid')
+    user = authenticate(username=username, password=password)
+    if user:
+        if user.is_active:
+            chat = Chat.objects.get(uuid=chat_uuid)
+            messages = Message.objects.filter(chat=chat)
+            json_data = serialize('python', messages)
+            data = {
+                "messages": json_data
+            }
+            return JsonResponse(status=200, data=data)
+        else:
+            return HttpResponse(status=403, content="Forbidden")
+    else:
+        return HttpResponse(status=401, content="Invalid name or password")
