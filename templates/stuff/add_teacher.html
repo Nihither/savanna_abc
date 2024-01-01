@@ -1,0 +1,76 @@
+<form action="javascript:void(null)" onsubmit="add_teacher()" method="post" id="add_teacher_form">
+    {% csrf_token %}
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
+                {{ form.first_name }}
+                {% if form.first_name.help_text %}
+                    {{ form.first_name.help_text }}
+                {% endif %}
+                {% if form.first_name.errors %}{{ form.first_name.errors }}{% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
+                {{ form.last_name }}
+                {% if form.last_name.help_text %}
+                    {{ form.last_name.help_text }}
+                {% endif %}
+                {% if form.last_name.errors %}{{ form.last_name.errors }}{% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.birthday.id_for_label }}">{{ form.birthday.label }}</label>
+                {{ form.birthday }}
+                {% if form.birthday.help_text %}
+                    {{ form.birthday.help_text }}
+                {% endif %}
+                {% if form.birthday.errors %}{{ form.birthday.errors }}{% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.manager.id_for_label }}">{{ form.manager.label }}</label>
+                {{ form.manager }}
+                {% if form.manager.help_text %}
+                    {{ form.manager.help_text }}
+                {% endif %}
+                {% if form.manager.errors %}{{ form.manager.errors }}{% endif %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
+                {{ form.phone }}
+                {% if form.phone.help_text %}
+                    {{ form.phone.help_text }}
+                {% endif %}
+                {% if form.phone.errors %}{{ form.phone.errors }}{% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                {{ form.email }}
+                {% if form.email.help_text %}
+                    {{ form.email.help_text }}
+                {% endif %}
+                {% if form.email.errors %}{{ form.email.errors }}{% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.additional_contact.id_for_label }}">{{ form.additional_contact.label }}</label>
+                {{ form.additional_contact }}
+                {% if form.additional_contact.help_text %}
+                    {{ form.additional_contact.help_text }}
+                {% endif %}
+                {% if form.additional_contact.errors %}{{ form.additional_contact.errors }}{% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.additional_contact_description.id_for_label }}">{{ form.additional_contact_description.label }}</label>
+                {{ form.additional_contact_description }}
+                {% if form.additional_contact_description.help_text %}
+                    {{ form.additional_contact_description.help_text }}
+                {% endif %}
+                {% if form.additional_contact_description.errors %}{{ form.additional_contact_description.errors }}{% endif %}
+            </div>
+        </div>
+    </div> <!-- row -->
+
+    <input class="btn btn-default" id="add_teacher_btn" type="submit" value="Сохранить">
+</form>

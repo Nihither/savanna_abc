@@ -1,0 +1,136 @@
+<form action="javascript:void(null)" onsubmit="add_student()" method="post" id="add_student_form">
+    {% csrf_token %}
+
+    <div class="row"> <!-- Personal info section -->
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
+                {{ form.first_name }}
+                {% if form.first_name.help_text %}
+                    {{ form.first_name.help_text }}
+                {% endif %}
+                {% if form.first_name.errors %}{{ form.first_name.errors }}{% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
+                {{ form.last_name }}
+                {% if form.last_name.help_text %}
+                    {{ form.last_name.help_text }}
+                {% endif %}
+                {% if form.last_name.errors %}{{ form.last_name.errors }}{% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.birthday.id_for_label }}">{{ form.birthday.label }}</label>
+                {{ form.birthday }}
+                {% if form.birthday.help_text %}
+                    {{ form.birthday.help_text }}
+                {% endif %}
+                {% if form.birthday.errors %}{{ form.birthday.errors }}{% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.is_adult.id_for_label }}">{{ form.is_adult.label }}</label>
+                {{ form.is_adult }}
+                {% if form.is_adult.help_text %}
+                    {{ form.is_adult.help_text }}
+                {% endif %}
+                {% if form.is_adult.errors %}{{ form.is_adult.errors }}{% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.manager.id_for_label }}">{{ form.manager.label }}</label>
+                {{ form.manager }}
+                {% if form.manager.help_text %}
+                    {{ form.manager.help_text }}
+                {% endif %}
+                {% if form.manager.errors %}{{ form.manager.errors }}{% endif %}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
+                {{ form.phone }}
+                {% if form.phone.help_text %}
+                    {{ form.phone.help_text }}
+                {% endif %}
+                {% if form.phone.errors %}{{ form.phone.errors }}{% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                {{ form.email }}
+                {% if form.email.help_text %}
+                    {{ form.email.help_text }}
+                {% endif %}
+                {% if form.email.errors %}{{ form.email.errors }}{% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.additional_contact.id_for_label }}">{{ form.additional_contact.label }}</label>
+                {{ form.additional_contact }}
+                {% if form.additional_contact.help_text %}
+                    {{ form.additional_contact.help_text }}
+                {% endif %}
+                {% if form.additional_contact.errors %}{{ form.additional_contact.errors }}{% endif %}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.additional_contact_description.id_for_label }}">{{ form.additional_contact_description.label }}</label>
+                {{ form.additional_contact_description }}
+                {% if form.additional_contact_description.help_text %}
+                    {{ form.additional_contact_description.help_text }}
+                {% endif %}
+                {% if form.additional_contact_description.errors %}{{ form.additional_contact_description.errors }}{% endif %}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <fieldset id="trustee_fieldset" disabled>
+                <div class="form-group">
+                    <label for="{{ form.trustee_first_name.id_for_label }}">{{ form.trustee_first_name.label }}</label>
+                    {{ form.trustee_first_name }}
+                    {% if form.trustee_first_name.help_text %}
+                        {{ form.trustee_first_name.help_text }}
+                    {% endif %}
+                    {% if form.trustee_first_name.errors %}{{ form.trustee_first_name.errors }}{% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.trustee_last_name.id_for_label }}">{{ form.trustee_last_name.label }}</label>
+                    {{ form.trustee_last_name }}
+                    {% if form.trustee_last_name.help_text %}
+                        {{ form.trustee_last_name.help_text }}
+                    {% endif %}
+                    {% if form.trustee_last_name.errors %}{{ form.trustee_last_name.errors }}{% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.trustee_phone.id_for_label }}">{{ form.trustee_phone.label }}</label>
+                    {{ form.trustee_phone }}
+                    {% if form.trustee_phone.help_text %}
+                        {{ form.trustee_phone.help_text }}
+                    {% endif %}
+                    {% if form.trustee_phone.errors %}{{ form.trustee_phone.errors }}{% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.trustee_email.id_for_label }}">{{ form.trustee_email.label }}</label>
+                    {{ form.trustee_email }}
+                    {% if form.trustee_email.help_text %}
+                        {{ form.trustee_email.help_text }}
+                    {% endif %}
+                    {% if form.trustee_email.errors %}{{ form.trustee_email.errors }}{% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.trustee_additional_contact.id_for_label }}">{{ form.trustee_additional_contact.label }}</label>
+                    {{ form.trustee_additional_contact }}
+                    {% if form.trustee_additional_contact.help_text %}
+                        {{ form.trustee_additional_contact.help_text }}
+                    {% endif %}
+                    {% if form.trustee_additional_contact.errors %}{{ form.trustee_additional_contact.errors }}{% endif %}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.trustee_additional_contact_description.id_for_label }}">{{ form.trustee_additional_contact_description.label }}</label>
+                    {{ form.trustee_additional_contact_description }}
+                    {% if form.trustee_additional_contact_description.help_text %}
+                        {{ form.trustee_additional_contact_description.help_text }}
+                    {% endif %}
+                    {% if form.trustee_additional_contact_description.errors %}{{ form.trustee_additional_contact_description.errors }}{% endif %}
+                </div>
+            </fieldset>
+        </div>
+    </div> <!-- row -->
+    
+    <input class="btn btn-default" id="add_student_btn" type="submit" value="Сохранить">
+</form>

@@ -159,7 +159,7 @@ $(document).ready(function () {
     $('#add_student').click(function (e) { 
         e.preventDefault();
         let url = '/student/add/';
-        $("#index_page_modal_title").text('Добавить преподавателя');
+        $("#index_page_modal_title").text('Добавить студента');
         $.get(url, function (data, textStatus, jqXHR) {
                 $('#index_page_modal_body').html(data);
                 $('#index_page_modal').modal('toggle');
@@ -212,6 +212,14 @@ $(document).ready(function () {
 
     $('#teacher_page_modal_body').on('click', '.schedule_cell_checkbox', function () {
         $(this).toggleClass('info');
+    });
+
+    $('#index_page_modal_body').on('change', '#id_is_adult', function () {
+        if ($('#trustee_fieldset').attr('disabled')) {
+            $('#trustee_fieldset').removeAttr('disabled');
+        } else {
+            $('#trustee_fieldset').attr('disabled', 'disabled');
+        }
     });
 
     // how to use jq on dinamic objects
@@ -341,7 +349,7 @@ function get_search_results_student() {
     );
 };
 
-function add_student(params) {
+function add_student() {
     let form_data = $('#add_student_form').serialize();
     $.ajax({
         type: "post",

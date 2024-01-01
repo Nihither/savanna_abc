@@ -3,7 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.template import loader
 from django.utils.safestring import mark_safe
 from datetime import date
-from .models import Profile, Class, Lesson
+from .models import Profile, Class, Lesson, Role, Contact, Teacher, Student
+from .forms import AddTeacherForm
+from .forms import AddStudentForm
 from .calendar import Calendar
 
 
@@ -129,6 +131,74 @@ def classes_per_day(request, teacher_id, year, month, day):
     return HttpResponse(template.render(context, request))
 
 
+@login_required
+def add_teacher(request):
+    if request.method == 'POST':
+        form_data = AddTeacherForm(data=request.POST)
+        if form_data.is_valid():
+            # creating profile
+            new_profile = Profile()
+            new_profile.first_name = form_data.cleaned_data['first_name']
+            new_profile.last_name = form_data.cleaned_data['last_name']
+            new_profile.birthday = form_data.cleaned_data['birthday']
+            new_profile.role = Role.objects.get(code='teacher')
+            new_profile.save()
+            # creating contact
+            new_contact = Contact()
+            new_contact.profile = new_profile
+            new_contact.phone = form_data.cleaned_data['phone']
+            new_contact.email = form_data.cleaned_data['email']
+            new_contact.additional_contact = form_data.cleaned_data['additional_contact']
+            new_contact.additional_contact_description = form_data.cleaned_data['additional_contact_description']
+            new_contact.save()
+            # creating teacher profile
+            new_teacher = Teacher()
+            new_teacher.profile = new_profile
+            new_teacher.manager = form_data.cleaned_data['manager']
+            new_teacher.save()
+            return HttpResponse(status=201, content="Сохранено успешно")
+        else:
+            context = {
+                "form": form_data
+            }
+            template = loader.get_template('stuff/add_teacher.html')
+            return HttpResponse(template.render(context, request), status=422)
+    else:
+        form = AddTeacherForm()
+        context = {
+            "form": form
+        }
+        template = loader.get_template('stuff/add_teacher.html')
+        return HttpResponse(template.render(context, request))
+
+
+@login_required
+def delete_teacher(request, teacher_id):
+    if request.method == 'POST':
+        teacher_profile = get_object_or_404(Profile, pk=teacher_id)
+        teacher_profile.delete()
+        return HttpResponse('Запись удалена')
+
+
+@login_required
+def archive_teacher(request, teacher_id):
+    if request.method == 'POST':
+        teacher_profile = get_object_or_404(Profile, pk=teacher_id)
+        teacher = teacher_profile.teacher
+        if teacher_profile.rmv:
+            teacher_profile.rmv = False
+            teacher_profile.save()
+            teacher.rmv = False
+            teacher.save()
+            return HttpResponse('Перенесено из Архива')
+        else:
+            teacher_profile.rmv = True
+            teacher_profile.save()
+            teacher.rmv = True
+            teacher.save()
+            return HttpResponse('Занесено в Архив')
+
+
 # Student section
 
 @login_required
@@ -168,3 +238,92 @@ def student_details(request, student_id):
     student = get_object_or_404(Profile, pk=student_id)
     context = {"student": student}
     return render(request, 'stuff/student.html', context=context)
+
+
+@login_required
+def add_student(request):
+    if request.method == 'POST':
+        form_data = AddStudentForm(data=request.POST)
+        if form_data.is_valid():
+            # creating profile
+            new_profile = Profile()
+            new_profile.first_name = form_data.cleaned_data['first_name']
+            new_profile.last_name = form_data.cleaned_data['last_name']
+            new_profile.birthday = form_data.cleaned_data['birthday']
+            new_profile.role = Role.objects.get(code='student')
+            new_profile.save()
+            # creating contact
+            new_contact = Contact()
+            new_contact.profile = new_profile
+            new_contact.phone = form_data.cleaned_data['phone']
+            new_contact.email = form_data.cleaned_data['email']
+            new_contact.additional_contact = form_data.cleaned_data['additional_contact']
+            new_contact.additional_contact_description = form_data.cleaned_data['additional_contact_description']
+            new_contact.save()
+            # creating student profile
+            new_student = Student()
+            new_student.profile = new_profile
+            new_student.manager = form_data.cleaned_data['manager']
+            new_student.is_adult = form_data.cleaned_data['is_adult']
+            new_student.save()
+            # creating trustee profile and adding to student profile
+            if not new_student.is_adult:
+                # creating trustee profile
+                new_trustee = Profile()
+                new_trustee.first_name = form_data.cleaned_data['trustee_first_name']
+                new_trustee.last_name = form_data.cleaned_data['trustee_last_name']
+                new_trustee.role = Role.objects.get(code='trustee')
+                new_trustee.save()
+                # creating trustee contact
+                new_trustee_contact = Contact()
+                new_trustee_contact.profile = new_trustee
+                new_trustee_contact.phone = form_data.cleaned_data['trustee_phone']
+                new_trustee_contact.email = form_data.cleaned_data['trustee_email']
+                new_trustee_contact.additional_contact = form_data.cleaned_data['trustee_additional_contact']
+                new_trustee_contact.additional_contact_description = \
+                    form_data.cleaned_data['trustee_additional_contact_description']
+                new_trustee_contact.save()
+                # adding trustee to student profile
+                new_student.trustee = new_trustee
+                new_student.save()
+            return HttpResponse(status=201, content="Сохранено успешно")
+        else:
+            context = {
+                "form": form_data,
+            }
+            template = loader.get_template('stuff/add_student.html')
+            return HttpResponse(template.render(context, request), status=422)
+    else:
+        form = AddStudentForm()
+        context = {
+            "form": form,
+        }
+        template = loader.get_template('stuff/add_student.html')
+        return HttpResponse(template.render(context, request))
+
+
+@login_required
+def delete_student(request, student_id):
+    if request.method == 'POST':
+        student = get_object_or_404(Profile, pk=student_id)
+        student.delete()
+        return HttpResponse('Запись удалена')
+
+
+@login_required
+def archive_student(request, student_id):
+    if request.method == 'POST':
+        student_profile = get_object_or_404(Profile, pk=student_id)
+        student = student_profile.student
+        if student_profile.rmv:
+            student_profile.rmv = False
+            student_profile.save()
+            student.rmv = False
+            student.save()
+            return HttpResponse('Перенесено из Архива')
+        else:
+            student_profile.rmv = True
+            student_profile.save()
+            student.rmv = True
+            student.save()
+            return HttpResponse('Занесено в Архив')
